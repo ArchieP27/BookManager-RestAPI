@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Book Manager</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<h1>Book Manager</h1>
+
+<h2>Add a new book</h2>
+<form id="add-book-form">
+  <input type="text" id="new-title" placeholder="Title" required />
+  <input type="text" id="new-author" placeholder="Author" required />
+  <button type="submit">Add Book</button>
+</form>
+
+<h2>Books List</h2>
+<ul id="books-list"></ul>
+
+<script>
+  const apiUrl = 'http://localhost:3000/books';
+
+  // Fetch and display books
+  async function loadBooks() {
+    const res = await fetch(apiUrl);
+    const books = await res.json();
+    const list = document.getElementById('books-list');
+    list.innerHTML = '';
+
+    books.forEach(book => {
+      const li = document.createElement('li');
+
+      li.innerHTML = `
+        <span class="book-title">${book.title}</span> by ${book.author}
+        <div class="actions">
+          <button onclick="showUpdateForm(${book.id}, '${book.title}', '${book.author}')">Update</button>
+          <button onclick="deleteBook(${book.id})">Delete</button>
+        </div>
+        <form class="update-form" id="update-form-${book.id}" style="display:none;">
+          <input type="text" id="update-title-${book.id}" value="${book.title}" required />
+          <input type="text" id="update-author-${book.id}" value="${book.author}" required />
+          <button type="submit">Save</button>
+          <button type="button" onclick="hideUpdateForm(${book.id})">Cancel</button>
+        </form>
+      `;
+
+      list.appendChild(li);
+
+      // Add submit event for update form
+      const updateForm = li.querySelector(`#update-form-${book.id}`);
+      updateForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const updatedTitle = document.getElementById(`update-title-${book.id}`).value;
+        const updatedAuthor = document.getElementById(`update-author-${book.id}`).value;
+
+        await fetch(`${apiUrl}/${book.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: updatedTitle, author: updatedAuthor })
+        });
+
+        hideUpdateForm(book.id);
+        loadBooks();
+      });
+    });
+  }
+
+  // Show update form
+  function showUpdateForm(id, title, author) {
+    document.getElementById(`update-form-${id}`).style.display = 'block';
+  }
+
+  // Hide update form
+  function hideUpdateForm(id) {
+    document.getElementById(`update-form-${id}`).style.display = 'none';
+  }
+
+  // Delete book
+  async function deleteBook(id) {
+    if (confirm('Are you sure you want to delete this book?')) {
+      await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
+      loadBooks();
+    }
+  }
+
+  // Add new book
+  document.getElementById('add-book-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById('new-title').value.trim();
+    const author = document.getElementById('new-author').value.trim();
+
+    if (!title || !author) {
+      alert('Please enter both title and author');
+      return;
+    }
+
+    await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, author })
+    });
+
+    document.getElementById('new-title').value = '';
+    document.getElementById('new-author').value = '';
+    loadBooks();
+  });
+
+  // Initial load
+  loadBooks();
+</script>
+
+</body>
+</html>

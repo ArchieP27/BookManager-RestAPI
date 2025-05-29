@@ -1,0 +1,110 @@
+/* General body and font */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 600px;
+  margin: 20px auto;
+  background: #e0f7fa; /* Light sky blue background */
+  color: #01579b; /* Dark blue text */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(1, 87, 155, 0.3);
+}
+
+/* Main title */
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Subtitles */
+h2 {
+  color: #0288d1;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #0288d1;
+  padding-bottom: 5px;
+}
+
+/* Form styling */
+form {
+  margin-bottom: 25px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  margin: 8px 0;
+  width: 100%;
+  box-sizing: border-box;
+  border: 2px solid #4fc3f7;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #0288d1;
+  outline: none;
+}
+
+/* Buttons */
+button {
+  background-color: #03a9f4;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 5px;
+}
+
+button:hover {
+  background-color: #0288d1;
+}
+
+/* Book list */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #b3e5fc; /* lighter blue */
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(1, 87, 155, 0.2);
+}
+
+/* Book title */
+.book-title {
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+/* Buttons for each book */
+.actions {
+  margin-top: 10px;
+}
+
+.actions button {
+  margin-right: 8px;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+/* Update form */
+.update-form {
+  margin-top: 10px;
+}
+
+.update-form input[type="text"] {
+  width: calc(50% - 10px);
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.update-form button {
+  width: auto;
+  margin-top: 0;
+}
