@@ -38,15 +38,15 @@ book-manager/
 
 ---
 
-##Server will run at: http://localhost:3000
+## Server will run at: http://localhost:3000
 
 ---
 
 ## 📌 TODO (For Improvement)
--- Save books to a JSON file or database
--- Add search and filter
--- Improve form validation
--- Make layout responsive for mobile  
+- Save books to a JSON file or database
+- Add search and filter
+- Improve form validation
+- Make layout responsive for mobile  
 
 ---
 
